@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Editor - Sourcefolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <!-- FilePond for drag & drop file uploads -->
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <!-- JSZip for downloading templates -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body class="bg-gradient-to-b from-zinc-900 to-black text-white min-h-screen" x-data="templateEditor">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 p-6 bg-zinc-950/80 backdrop-blur-lg border-b border-purple-500/10">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold flex items-center gap-2">
+                <svg class="w-8 h-8 text-purple-500" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Sourcefolio
+            </a>
+            <div class="flex items-center gap-4">
+                <button @click="downloadTemplate" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                    </svg>
+                    Download Template
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Editor -->
+    <div class="pt-24 px-6 pb-12">
+        <div class="max-w-7xl mx-auto">
+            <!-- Template Preview -->
+            <div class="bg-zinc-900/50 rounded-xl p-8 mb-8">
+                <div x-html="currentTemplate" class="min-h-[500px]"></div>
+            </div>
+
+            <!-- Editor Sections -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Left Column: Basic Info & Theme -->
+                <div class="space-y-6">
+                    <!-- Theme & Colors -->
+                    <div class="bg-zinc-800/50 rounded-lg p-6">
+                        <h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20h9"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.5 3.5a2.121 2.121 0 113 3L7 19.5 3 21l1.5-4L16.5 3.5z"/></svg>
+                            Theme & Colors
+                        </h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-medium mb-1">Primary Color</label>
+                                <input type="color" x-model="theme.primary" class="w-10 h-10 p-0 border-none rounded-full cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium mb-1">Secondary Color</label>
+                                <input type="color" x-model="theme.secondary" class="w-10 h-10 p-0 border-none rounded-full cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium mb-1">Background</label>
+                                <input type="color" x-model="theme.background" class="w-10 h-10 p-0 border-none rounded-full cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium mb-1">Text Color</label>
+                                <input type="color" x-model="theme.text" class="w-10 h-10 p-0 border-none rounded-full cursor-pointer">
+                            </div>
+                        </div>
+                        <button @click="resetTheme" class="mt-4 text-xs text-purple-300 hover:underline">Reset Colors</button>
+                    </div>
+
+                    <div class="bg-zinc-800/50 rounded-lg p-6">
+                        <h3 class="text-xl font-semibold mb-4">Basic Information</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Name</label>
+                                <input type="text" x-model="data.name" class="w-full bg-zinc-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Title/Role</label>
+                                <input type="text" x-model="data.title" class="w-full bg-zinc-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Bio</label>
+                                <textarea x-model="data.bio" rows="4" class="w-full bg-zinc-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 outline-none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="bg-zinc-800/50 rounded-lg p-6">
+                        <h3 class="text-xl font-semibold mb-4">Contact Information</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Email</label>
+                                <input type="email" x-model="data.email" class="w-full bg-zinc-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Phone (optional)</label>
+                                <input type="tel" x-model="data.phone" class="w-full bg-zinc-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Location</label>
+                                <input type="text" x-model="data.location" class="w-full bg-zinc-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 outline-none">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form Settings -->
+                    <div class="bg-zinc-800/50 rounded-lg p-6">
+                        <h3 class="text-xl font-semibold mb-4">Contact Form Settings</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Web3Forms API Key</label>
+                                <input type="text" x-model="data.web3formsKey" class="w-full bg-zinc-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 outline-none" placeholder="Enter your Web3Forms API key">
+                                <p class="mt-2 text-sm text-gray-400">
+                                    <a href="https://web3forms.com/" target="_blank" class="text-purple-400 hover:text-purple-300">Get a free API key from Web3Forms</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Media & Projects -->
+                <div class="space-y-6">
+                    <!-- Profile Image -->
+                    <div class="bg-zinc-800/50 rounded-lg p-6">
+                        <h3 class="text-xl font-semibold mb-4">Profile Image</h3>
+                        <input type="file" class="filepond" name="profile" accept="image/*">
+                    </div>
+
+                    <!-- Project Images/Videos -->
+                    <div class="bg-zinc-800/50 rounded-lg p-6">
+                        <h3 class="text-xl font-semibold mb-4">Project Media</h3>
+                        <input type="file" class="filepond" name="projects" multiple accept="image/*,video/*">
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="bg-zinc-800/50 rounded-lg p-6">
+                        <h3 class="text-xl font-semibold mb-4">Social Links</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">LinkedIn</label>
+                                <input type="url" x-model="data.social.linkedin" class="w-full bg-zinc-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">GitHub</label>
+                                <input type="url" x-model="data.social.github" class="w-full bg-zinc-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Twitter</label>
+                                <input type="url" x-model="data.social.twitter" class="w-full bg-zinc-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-purple-500 outline-none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Register FilePond plugins
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        FilePond.registerPlugin(FilePondPluginFileValidateType);
+
+        // Initialize Alpine.js data
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('templateEditor', () => ({
+                data: {
+                    name: '',
+                    title: '',
+                    bio: '',
+                    email: '',
+                    phone: '',
+                    location: '',
+                    social: {
+                        linkedin: '',
+                        github: '',
+                        twitter: ''
+                    },
+                    web3formsKey: '',
+                    profileImage: null,
+                    projectMedia: [],
+                    projects: []
+                },
+                theme: {
+                    primary: '#8b5cf6',
+                    secondary: '#f472b6',
+                    background: '#18181b',
+                    text: '#ffffff'
+                },
+                currentTemplate: '',
+                compiledTemplate: null,
+                templateType: new URLSearchParams(window.location.search).get('template') || 'minimal',
+
+                init() {
+                    this.initializeFilePond();
+                    this.loadTemplate();
+                    
+                    // Watch for data changes to update template
+                    this.$watch('data', () => {
+                        this.updateTemplate();
+                    }, { deep: true });
+                    this.$watch('theme', () => {
+                        this.updateTemplate();
+                    }, { deep: true });
+                },
+
+                initializeFilePond() {
+                    // Initialize profile image upload
+                    const profileUpload = FilePond.create(document.querySelector('input[name="profile"]'), {
+                        onaddfile: (error, file) => {
+                            if (!error) {
+                                const reader = new FileReader();
+                                reader.onload = (e) => {
+                                    this.data.profileImage = e.target.result;
+                                    this.updateTemplate();
+                                };
+                                reader.readAsDataURL(file.file);
+                            }
+                        }
+                    });
+
+                    // Initialize project media upload
+                    const projectUpload = FilePond.create(document.querySelector('input[name="projects"]'), {
+                        allowMultiple: true,
+                        onaddfile: (error, file) => {
+                            if (!error) {
+                                const reader = new FileReader();
+                                reader.onload = (e) => {
+                                    const newProject = {
+                                        title: 'Project ' + (this.data.projects.length + 1),
+                                        description: 'Click to edit project description',
+                                        image: e.target.result
+                                    };
+                                    this.data.projects.push(newProject);
+                                    this.updateTemplate();
+                                };
+                                reader.readAsDataURL(file.file);
+                            }
+                        }
+                    });
+                },
+
+                async loadTemplate() {
+                    try {
+                        const response = await fetch(`/templates/${this.templateType}.html`);
+                        const templateText = await response.text();
+                        this.compiledTemplate = Handlebars.compile(templateText);
+                        this.updateTemplate();
+                    } catch (error) {
+                        console.error('Error loading template:', error);
+                    }
+                },
+
+                updateTemplate() {
+                    if (!this.compiledTemplate) return;
+                    
+                    const templateData = {
+                        ...this.data,
+                        year: new Date().getFullYear(),
+                        contact_form_key: this.data.web3formsKey
+                    };
+                    
+                    // Inject theme as CSS variables
+                    const themeVars = `:root { --primary: ${this.theme.primary}; --secondary: ${this.theme.secondary}; --background: ${this.theme.background}; --text: ${this.theme.text}; }`;
+                    const styleBlock = `<style>${themeVars}</style>`;
+                    this.currentTemplate = styleBlock + this.compiledTemplate(templateData);
+                },
+
+                async downloadTemplate() {
+                    const zip = new JSZip();
+                    
+                    // Add HTML file with proper template data
+                    zip.file("index.html", this.currentTemplate);
+                    
+                    // Add images directory
+                    const imagesDir = zip.folder("images");
+                    
+                    // Add profile image
+                    if (this.data.profileImage) {
+                        const imageData = this.data.profileImage.split(',')[1];
+                        imagesDir.file("profile.jpg", imageData, {base64: true});
+                    }
+                    
+                    // Add project images
+                    this.data.projects.forEach((project, index) => {
+                        const imageData = project.image.split(',')[1];
+                        imagesDir.file(`project-${index + 1}.jpg`, imageData, {base64: true});
+                    });
+                    
+                    // Add README with setup instructions
+                    const readme = `# Portfolio Website
+
+This portfolio website was created with Sourcefolio.
+
+## Setup Instructions
+
+1. Replace the Web3Forms API key in index.html with your own key from https://web3forms.com/
+2. Upload the contents to your web hosting provider
+3. Your portfolio is ready!
+
+## Files Included
+- index.html - Your portfolio website
+- images/ - Directory containing your profile and project images
+`;
+                    zip.file("README.md", readme);
+                    
+                    // Generate and download zip
+                    const content = await zip.generateAsync({type: "blob"});
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(content);
+                    link.download = "portfolio-template.zip";
+                    link.click();
+                },
+                resetTheme() {
+                    this.theme = {
+                        primary: '#8b5cf6',
+                        secondary: '#f472b6',
+                        background: '#18181b',
+                        text: '#ffffff'
+                    };
+                }
+            }));
+        });
+    </script>
+</body>
+</html> 

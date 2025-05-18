@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templates - Sourcefolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+<body class="bg-gradient-to-b from-zinc-900 to-black text-white min-h-screen" x-data="{ previewOpen: false, previewTemplate: null }">
+    <!-- Background Pattern -->
+    <div class="fixed inset-0 -z-10 overflow-hidden opacity-20">
+        <svg class="absolute w-[200%] h-[200%] -top-[50%] -left-[50%]" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+                    <path d="M 64 0 L 0 0 0 64" fill="none" stroke="rgba(168, 85, 247, 0.2)" stroke-width="1"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+    </div>
+
+    <!-- Decorative Shapes -->
+    <div class="fixed inset-0 -z-5 overflow-hidden pointer-events-none">
+        <div class="absolute top-20 right-[20%] w-64 h-64 bg-purple-500/10 rounded-full blur-3xl floating"></div>
+        <div class="absolute bottom-20 left-[15%] w-72 h-72 bg-gradient-to-r from-purple-500/20 to-transparent rounded-full blur-3xl floating-slow"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 p-6 bg-zinc-950/80 backdrop-blur-lg border-b border-purple-500/10">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold flex items-center gap-2">
+                <svg class="w-8 h-8 text-purple-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Sourcefolio
+            </a>
+            <div class="flex items-center gap-6">
+                <a href="features.html" class="text-zinc-300 hover:text-white transition-colors">Features</a>
+                <a href="templates.html" class="text-zinc-300 hover:text-white transition-colors">Templates</a>
+                <a href="resources.html" class="text-zinc-300 hover:text-white transition-colors">Resources</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Templates Section -->
+    <section class="bg-black text-white py-32 px-6" id="templates">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4">Beautiful templates for your portfolio</h2>
+            <p class="text-lg text-gray-300 mb-8">Choose a professionally designed template and customize it to showcase your work</p>
+
+            <div class="grid gap-10 sm:grid-cols-2 max-w-4xl mx-auto">
+                <!-- Minimal Template Card -->
+                <div class="bg-[#1f1f1f] rounded-lg shadow-lg hover:scale-105 hover:bg-[#2a2a2a] transition-all duration-300 overflow-hidden group">
+                    <div class="relative">
+                        <div class="w-full h-64 flex items-center justify-center bg-white">
+                            <!-- Minimal Template SVG -->
+                            <svg width="320" height="180" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="320" height="180" rx="24" fill="#fff"/>
+                                <circle cx="60" cy="60" r="28" fill="#e5e7eb"/>
+                                <rect x="100" y="40" width="120" height="14" rx="7" fill="#d1d5db"/>
+                                <rect x="100" y="62" width="80" height="10" rx="5" fill="#e5e7eb"/>
+                                <rect x="40" y="110" width="56" height="40" rx="8" fill="#f3f4f6"/>
+                                <rect x="104" y="110" width="56" height="40" rx="8" fill="#f3f4f6"/>
+                                <rect x="168" y="110" width="56" height="40" rx="8" fill="#f3f4f6"/>
+                            </svg>
+                        </div>
+                        <div class="absolute inset-0 bg-purple-500/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                            <button @click="previewTemplate = 'minimal'; previewOpen = true" class="bg-white text-purple-600 px-4 py-2 rounded-lg font-semibold hover:bg-purple-100 transition-all">Preview</button>
+                            <a href="template-editor.html?template=minimal" class="bg-black/50 text-white px-4 py-2 rounded-lg font-semibold hover:bg-black/70 transition-all">Use Template</a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-purple-400 mb-2">Minimal Portfolio</h3>
+                        <p class="text-gray-300">Clean and professional design perfect for showcasing your work with elegance.</p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded">Responsive</span>
+                            <span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded">Contact Form</span>
+                            <span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded">Project Gallery</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Creative Template Card -->
+                <div class="bg-[#1f1f1f] rounded-lg shadow-lg hover:scale-105 hover:bg-[#2a2a2a] transition-all duration-300 overflow-hidden group">
+                    <div class="relative">
+                        <div class="w-full h-64 flex items-center justify-center bg-gradient-to-br from-purple-700 via-pink-500 to-indigo-500">
+                            <!-- Creative Template SVG -->
+                            <svg width="320" height="180" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="320" height="180" rx="24" fill="url(#creative-bg)"/>
+                                <defs>
+                                    <linearGradient id="creative-bg" x1="0" y1="0" x2="320" y2="180" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#a78bfa"/>
+                                        <stop offset="0.5" stop-color="#f472b6"/>
+                                        <stop offset="1" stop-color="#6366f1"/>
+                                    </linearGradient>
+                                </defs>
+                                <ellipse cx="60" cy="60" rx="28" ry="28" fill="#fff" fill-opacity="0.15"/>
+                                <ellipse cx="260" cy="50" rx="18" ry="18" fill="#fff" fill-opacity="0.10"/>
+                                <rect x="100" y="40" width="120" height="14" rx="7" fill="#fff" fill-opacity="0.25"/>
+                                <rect x="100" y="62" width="80" height="10" rx="5" fill="#fff" fill-opacity="0.18"/>
+                                <rect x="40" y="110" width="56" height="40" rx="12" fill="#fff" fill-opacity="0.12"/>
+                                <rect x="104" y="110" width="56" height="40" rx="12" fill="#fff" fill-opacity="0.12"/>
+                                <rect x="168" y="110" width="56" height="40" rx="12" fill="#fff" fill-opacity="0.12"/>
+                                <circle cx="260" cy="140" r="14" fill="#fff" fill-opacity="0.10"/>
+                            </svg>
+                        </div>
+                        <div class="absolute inset-0 bg-purple-500/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                            <button @click="previewTemplate = 'creative'; previewOpen = true" class="bg-white text-purple-600 px-4 py-2 rounded-lg font-semibold hover:bg-purple-100 transition-all">Preview</button>
+                            <a href="template-editor.html?template=creative" class="bg-black/50 text-white px-4 py-2 rounded-lg font-semibold hover:bg-black/70 transition-all">Use Template</a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-purple-400 mb-2">Creative Portfolio</h3>
+                        <p class="text-gray-300">Modern and dynamic design with animations and stunning visual effects.</p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded">Animations</span>
+                            <span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded">Dark Theme</span>
+                            <span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded">Interactive</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preview Modal -->
+    <div x-show="previewOpen" 
+         class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         @click.self="previewOpen = false">
+        <div class="bg-zinc-900 rounded-lg shadow-xl max-w-6xl w-full max-h-[90vh] overflow-hidden relative">
+            <div class="flex justify-between items-center p-4 border-b border-zinc-700">
+                <h3 class="text-xl font-semibold" x-text="previewTemplate === 'minimal' ? 'Minimal Portfolio Preview' : 'Creative Portfolio Preview'"></h3>
+                <button @click="previewOpen = false" class="text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="overflow-y-auto max-h-[calc(90vh-80px)]">
+                <iframe x-bind:src="'/templates/' + previewTemplate + '.html'" class="w-full h-[800px]"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        .floating-slow {
+            animation: float 8s ease-in-out infinite;
+        }
+    </style>
+</body>
+</html> 

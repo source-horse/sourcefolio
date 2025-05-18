@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - Sourcefolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-b from-zinc-900 to-black text-white min-h-screen">
+    <!-- Background Pattern -->
+    <div class="fixed inset-0 -z-10 overflow-hidden opacity-20">
+        <svg class="absolute w-[200%] h-[200%] -top-[50%] -left-[50%]" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+                    <path d="M 64 0 L 0 0 0 64" fill="none" stroke="rgba(168, 85, 247, 0.2)" stroke-width="1"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+    </div>
+
+    <!-- Decorative Shapes -->
+    <div class="fixed inset-0 -z-5 overflow-hidden pointer-events-none">
+        <div class="absolute top-20 right-[20%] w-64 h-64 bg-purple-500/10 rounded-full blur-3xl floating"></div>
+        <div class="absolute bottom-20 left-[15%] w-72 h-72 bg-gradient-to-r from-purple-500/20 to-transparent rounded-full blur-3xl floating-slow"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 p-6 bg-zinc-950/80 backdrop-blur-lg border-b border-purple-500/10">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold flex items-center gap-2">
+                <svg class="w-8 h-8 text-purple-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Sourcefolio
+            </a>
+            <div class="flex items-center gap-6">
+                <a href="features.html" class="text-zinc-300 hover:text-white transition-colors">Features</a>
+                <a href="templates.html" class="text-zinc-300 hover:text-white transition-colors">Templates</a>
+                <a href="resources.html" class="text-zinc-300 hover:text-white transition-colors">Resources</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Features Section -->
+    <section class="bg-black text-white py-32 px-6" id="services">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4">Everything you need to build modern websites</h2>
+            <p class="text-lg text-gray-300 mb-12">Powerful features to help you design, develop, and launch — no code needed.</p>
+
+            <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Feature Card -->
+                <div class="bg-[#1f1f1f] p-6 rounded-lg shadow-lg hover:scale-105 hover:bg-[#2a2a2a] transition-all duration-300">
+                    <img src="https://img.icons8.com/color/48/paint-palette.png" class="mb-4 mx-auto" alt="Visual Design" />
+                    <h3 class="text-xl font-semibold text-purple-400 mb-2">Visual Design</h3>
+                    <p class="text-gray-300">Create stunning websites with our intuitive editor. Absolutely no code required.</p>
+                </div>
+
+                <div class="bg-[#1f1f1f] p-6 rounded-lg shadow-lg hover:scale-105 hover:bg-[#2a2a2a] transition-all duration-300">
+                    <img src="https://img.icons8.com/color/48/responsive.png" class="mb-4 mx-auto" alt="Responsive Design" />
+                    <h3 class="text-xl font-semibold text-purple-400 mb-2">Responsive Design</h3>
+                    <p class="text-gray-300">Automatic mobile-friendly layout that looks amazing on any screen size.</p>
+                </div>
+
+                <div class="bg-[#1f1f1f] p-6 rounded-lg shadow-lg hover:scale-105 hover:bg-[#2a2a2a] transition-all duration-300">
+                    <img src="https://img.icons8.com/color/48/rocket.png" class="mb-4 mx-auto" alt="Fast Performance" />
+                    <h3 class="text-xl font-semibold text-purple-400 mb-2">Fast Performance</h3>
+                    <p class="text-gray-300">Enjoy lightning-fast websites with image optimization and code minification.</p>
+                </div>
+
+                <div class="bg-[#1f1f1f] p-6 rounded-lg shadow-lg hover:scale-105 hover:bg-[#2a2a2a] transition-all duration-300">
+                    <img src="https://img.icons8.com/color/48/lock--v1.png" class="mb-4 mx-auto" alt="Security" />
+                    <h3 class="text-xl font-semibold text-purple-400 mb-2">Security</h3>
+                    <p class="text-gray-300">Enterprise-grade security built-in to keep your content and users safe.</p>
+                </div>
+
+                <div class="bg-[#1f1f1f] p-6 rounded-lg shadow-lg hover:scale-105 hover:bg-[#2a2a2a] transition-all duration-300">
+                    <img src="https://img.icons8.com/color/48/combo-chart.png" class="mb-4 mx-auto" alt="Analytics" />
+                    <h3 class="text-xl font-semibold text-purple-400 mb-2">Analytics</h3>
+                    <p class="text-gray-300">Built-in analytics to monitor and improve your site's performance.</p>
+                </div>
+
+                <div class="bg-[#1f1f1f] p-6 rounded-lg shadow-lg hover:scale-105 hover:bg-[#2a2a2a] transition-all duration-300">
+                    <img src="https://img.icons8.com/color/48/seo.png" class="mb-4 mx-auto" alt="SEO Tools" />
+                    <h3 class="text-xl font-semibold text-purple-400 mb-2">SEO Tools</h3>
+                    <p class="text-gray-300">Get discovered easily with built-in search engine optimization tools.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        .floating-slow {
+            animation: float 8s ease-in-out infinite;
+        }
+    </style>
+</body>
+</html> 

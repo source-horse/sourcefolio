@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Template Previews</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+<body>
+    <div id="templates" style="width: 1200px; height: 800px;">
+        <iframe id="template" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+
+    <script>
+        const templates = ['minimal', 'creative'];
+        let currentIndex = 0;
+
+        async function captureTemplate() {
+            if (currentIndex >= templates.length) {
+                console.log('All previews generated!');
+                return;
+            }
+
+            const template = templates[currentIndex];
+            const iframe = document.getElementById('template');
+            
+            // Load template
+            iframe.src = `/templates/${template}.html`;
+            
+            // Wait for iframe to load
+            await new Promise(resolve => iframe.onload = resolve);
+            
+            // Add sample data to the template
+            const iframeDoc = iframe.contentWindow.document;
+            const sampleData = {
+                name: 'John Doe',
+                title: 'Full Stack Developer',
+                bio: 'Passionate developer with expertise in web technologies and creative problem solving.',
+                profileImage: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+                projects: [
+                    {
+                        title: 'E-commerce Platform',
+                        description: 'A modern e-commerce solution built with React and Node.js',
+                        image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                    },
+                    {
+                        title: 'Portfolio Website',
+                        description: 'A creative portfolio website showcasing client work',
+                        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1115&q=80'
+                    }
+                ],
+                social: {
+                    linkedin: 'https://linkedin.com',
+                    github: 'https://github.com',
+                    twitter: 'https://twitter.com'
+                }
+            };
+
+            // Replace template variables
+            const html = iframeDoc.documentElement.outerHTML;
+            const compiledHtml = html.replace(/\{\{(\w+)\}\}/g, (match, key) => {
+                return sampleData[key] || '';
+            });
+            iframeDoc.documentElement.innerHTML = compiledHtml;
+
+            // Wait for images to load
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            // Capture screenshot
+            const canvas = await html2canvas(iframeDoc.body, {
+                width: 1200,
+                height: 800,
+                scale: 1
+            });
+
+            // Convert to PNG and download
+            const link = document.createElement('a');
+            link.download = `${template}-preview.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+
+            // Move to next template
+            currentIndex++;
+            setTimeout(captureTemplate, 1000);
+        }
+
+        // Start capturing
+        captureTemplate();
+    </script>
+</body>
+</html> 

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How to Use - Sourcefolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f0f0f, #1c1c2d);
+      color: #ffffff;
+      scroll-behavior: smooth;
+    }
+
+    header {
+      text-align: center;
+      padding: 4rem 1rem 2rem;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #a86eff;
+      position: relative;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #a86eff, transparent);
+    }
+
+    .steps-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 800px;
+      margin: auto;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .steps-container::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, #a86eff, transparent);
+      transform: translateX(-50%);
+    }
+
+    .step {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(168, 110, 255, 0.2);
+      padding: 2rem;
+      border-radius: 1rem;
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s ease-in-out;
+      width: 100%;
+      position: relative;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .step::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #a86eff;
+      border-radius: 50%;
+      left: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 0 20px #a86eff;
+    }
+
+    .step.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .step:hover {
+      transform: translateY(-5px);
+      border-color: rgba(168, 110, 255, 0.4);
+      box-shadow: 0 8px 30px rgba(168, 110, 255, 0.1);
+    }
+
+    .step h2 {
+      color: #b982ff;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .step h2 svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .step p {
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    .get-started-btn {
+      background: linear-gradient(135deg, #b982ff, #a065e5);
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .get-started-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+
+    .get-started-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(168, 110, 255, 0.3);
+    }
+
+    .get-started-btn:hover::before {
+      left: 100%;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        font-size: 2rem;
+      }
+
+      .step {
+        padding: 1.5rem;
+      }
+
+      .steps-container::before {
+        left: 20px;
+      }
+
+      .step::before {
+        left: -30px;
+      }
+    }
+
+    /* Floating animation for decorative elements */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 p-6 bg-zinc-950/80 backdrop-blur-lg border-b border-purple-500/10">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <a href="index.html" class="text-xl font-bold flex items-center gap-2 text-white">
+        <svg class="w-8 h-8 text-purple-500" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Sourcefolio
+      </a>
+      <div class="flex items-center gap-6">
+        <a href="features.html" class="text-zinc-300 hover:text-white transition-colors">Features</a>
+        <a href="templates.html" class="text-zinc-300 hover:text-white transition-colors">Templates</a>
+        <a href="how-to-use.html" class="text-zinc-300 hover:text-white transition-colors">How to Use</a>
+        <a id="auth-btn" href="authenticate.html" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-semibold transition">Sign In</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="pt-24">How to Use Sourcefolio</header>
+
+  <div class="steps-container">
+    <div class="step">
+      <h2>
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/>
+        </svg>
+        Step 1: Choose a Template
+      </h2>
+      <p>Browse from a variety of pre-built templates tailored for students, developers, designers, and more. Just click on "View Templates".</p>
+    </div>
+
+    <div class="step">
+      <h2>
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+        </svg>
+        Step 2: Upload Your Files
+      </h2>
+      <p>Use our drag-and-drop feature to upload images, documents, resumes, and project files. All files will be auto-organized in your portfolio.</p>
+    </div>
+
+    <div class="step">
+      <h2>
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/>
+        </svg>
+        Step 3: Customize Visually
+      </h2>
+      <p>Edit your content directly on the site with our real-time visual editor—no coding needed. Just drag, drop, and style!</p>
+    </div>
+
+    <div class="step">
+      <h2>
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+        Step 4: Publish Instantly
+      </h2>
+      <p>With one click, publish your portfolio and get a shareable link with free hosting and a subdomain. Ready to impress!</p>
+    </div>
+
+    <div class="step">
+      <h2>
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+        </svg>
+        Step 5: Share & Grow
+      </h2>
+      <p>Share your portfolio with recruiters, colleges, or clients. Update anytime from your dashboard—easy and fast.</p>
+    </div>
+
+    <button class="get-started-btn" onclick="location.href='templates.html'">
+      Get Started
+      <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-45 translate-x-full transition-transform duration-300 ease-out group-hover:translate-x-0"></div>
+    </button>
+  </div>
+
+  <script>
+    // Intersection Observer for step animations
+    const steps = document.querySelectorAll('.step');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    steps.forEach(step => {
+      observer.observe(step);
+    });
+
+    // Authentication button state
+    const authBtn = document.getElementById('auth-btn');
+    if (authBtn) {
+      if (document.cookie.includes('authenticated=true')) {
+        authBtn.textContent = 'Dashboard';
+        authBtn.href = 'template-editor.html';
+      } else {
+        authBtn.textContent = 'Sign In';
+        authBtn.href = 'authenticate.html';
+      }
+    }
+  </script>
+</body>
+</html> 
